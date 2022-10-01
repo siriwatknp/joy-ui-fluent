@@ -1,5 +1,5 @@
 import { createGetCssVar, extendTheme } from '@mui/joy/styles';
-import type {} from '@mui/joy';
+import { buttonClasses } from '@mui/joy';
 
 declare module '@mui/joy/styles' {
   interface PaletteNeutral {
@@ -28,7 +28,7 @@ declare module '@mui/joy/styles' {
   interface TypographySystemOverrides {
     metadataLimited: true;
     metadata: true;
-    bodyText: true,
+    bodyText: true;
     subjectTitle: true;
     header: true;
     paneHeader: true;
@@ -74,6 +74,9 @@ const fluentTheme = extendTheme({
           darkAlt: '#106EBE',
           dark: '#005A9E',
           darker: '#004578',
+          solidBg: getCssVar('palette-primary-500'),
+          solidHoverBg: getCssVar('palette-primary-darkAlt'),
+          solidActiveBg: getCssVar('palette-primary-dark'),
           // generated from http://mcg.mbitson.com/
           '50': '#e0effa',
           '100': '#b3d7f2',
@@ -139,7 +142,7 @@ const fluentTheme = extendTheme({
           160: '#323130',
           190: '#201F1E',
         },
-        divider: getCssVar('palette-neutral-30')
+        divider: getCssVar('palette-neutral-30'),
       },
     },
   },
@@ -155,11 +158,13 @@ const fluentTheme = extendTheme({
     // 💡 Allow custom properties to variant
     // use case: Button
   },
-  fontSize: {
-    xs: '0.7rem',
-    sm: '0.75rem',
-    md: '0.875rem',
-    lg: '1rem',
+  fontFamily: {
+    display: `'Segoe UI Web (West European)', 'Segoe UI', ${getCssVar(
+      'fontFamily-fallback'
+    )}`,
+    body: `'Segoe UI Web (West European)', 'Segoe UI', ${getCssVar(
+      'fontFamily-fallback'
+    )}`,
   },
   // 💡 custom typography
   typography: {
@@ -201,10 +206,14 @@ const fluentTheme = extendTheme({
     },
   },
   shadow: {
-    "4": '0px 1.600000023841858px 3.5999999046325684px 0px rgba(0 0 0 / 0.13), 0px 0.30000001192092896px 0.8999999761581421px 0px rgba(0 0 0 / 0.1)',
-    '8': '0px 3.200000047683716px 7.199999809265137px 0px rgba(0 0 0 / 0.13), 0px 0.6000000238418579px 1.7999999523162842px 0px rgba(0 0 0 / 0.1)',
-    '16': '0px 6.400000095367432px 14.399999618530273px 0px rgba(0, 0, 0, 0.13), 0px 1.2000000476837158px 3.5999999046325684px 0px rgba(0, 0, 0, 0.1)',
-    '64': '0px 25.600000381469727px 57.599998474121094px 0px rgba(0, 0, 0, 0.22), 0px 4.800000190734863px 14.399999618530273px 0px rgba(0, 0, 0, 0.18)',
+    '4':
+      '0px 1.600000023841858px 3.5999999046325684px 0px rgba(0 0 0 / 0.13), 0px 0.30000001192092896px 0.8999999761581421px 0px rgba(0 0 0 / 0.1)',
+    '8':
+      '0px 3.200000047683716px 7.199999809265137px 0px rgba(0 0 0 / 0.13), 0px 0.6000000238418579px 1.7999999523162842px 0px rgba(0 0 0 / 0.1)',
+    '16':
+      '0px 6.400000095367432px 14.399999618530273px 0px rgba(0, 0, 0, 0.13), 0px 1.2000000476837158px 3.5999999046325684px 0px rgba(0, 0, 0, 0.1)',
+    '64':
+      '0px 25.600000381469727px 57.599998474121094px 0px rgba(0, 0, 0, 0.22), 0px 4.800000190734863px 14.399999618530273px 0px rgba(0, 0, 0, 0.18)',
   },
   radius: {
     xs: '0px',
@@ -216,7 +225,25 @@ const fluentTheme = extendTheme({
   components: {
     JoyButton: {
       styleOverrides: {
-        
+        root: ({ theme, ownerState }) => ({
+          ...(ownerState.size === 'md' && {
+            minHeight: 'var(--Button-minHeight, 32px)',
+            paddingInline: '20px',
+            ...theme.typography.bodyText,
+          }),
+          ...(ownerState.variant === 'solid' && {
+            [theme.focus.selector]: {
+              outlineColor: '#fff',
+              outlineOffset: '-3px',
+            },
+          }),
+          borderRadius: '2px',
+          fontWeight: 600,
+          [`&.${buttonClasses.disabled}`]: {
+            backgroundColor: theme.vars.palette.neutral[20],
+            color: theme.vars.palette.neutral[90],
+          },
+        }),
       },
     },
   },
