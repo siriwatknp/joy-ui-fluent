@@ -74,3 +74,59 @@ PrimaryIconDropdown.args = {
   startDecorator: <StringIcon />,
   endDecorator: <Dropdown />,
 };
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+  variant: 'outlined',
+  color: 'neutral',
+};
+
+export const SecondaryIcon = Template.bind({});
+SecondaryIcon.args = {
+  variant: 'outlined',
+  color: 'neutral',
+  startDecorator: <StringIcon />,
+};
+
+export const SecondaryDropdown = Template.bind({});
+SecondaryDropdown.args = {
+  variant: 'outlined',
+  color: 'neutral',
+  endDecorator: <Dropdown />,
+};
+
+export const SecondaryIconDropdown = Template.bind({});
+SecondaryIconDropdown.args = {
+  variant: 'outlined',
+  color: 'neutral',
+  startDecorator: <StringIcon />,
+  endDecorator: <Dropdown />,
+};
+
+export const Text = Template.bind({});
+Text.args = {
+  variant: 'plain',
+  color: 'neutral',
+};
+
+export const TextIcon = Template.bind({});
+TextIcon.args = {
+  variant: 'plain',
+  color: 'neutral',
+  startDecorator: <StringIcon />,
+};
+
+export const TextDropdown = Template.bind({});
+TextDropdown.args = {
+  variant: 'plain',
+  color: 'neutral',
+  endDecorator: <Dropdown />,
+};
+
+export const TextIconDropdown = Template.bind({});
+TextIconDropdown.args = {
+  variant: 'plain',
+  color: 'neutral',
+  startDecorator: <StringIcon />,
+  endDecorator: <Dropdown />,
+};

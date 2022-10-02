@@ -9,6 +9,7 @@ declare module '@mui/joy/styles' {
     40: string;
     60: string;
     90: string;
+    110: string;
     130: string;
     150: string;
     160: string;
@@ -137,10 +138,20 @@ const fluentTheme = extendTheme({
           50: '#D2D0CE',
           60: '#C8C6C4',
           90: '#A19F9D',
+          110: '#8A8886',
           130: '#605E5C',
           150: '#3B3A39',
           160: '#323130',
           190: '#201F1E',
+          plainColor: getCssVar('palette-neutral-190'),
+          plainHoverBg: getCssVar('palette-neutral-20'),
+          plainActiveBg: getCssVar('palette-neutral-30'),
+          plainDisabledColor: getCssVar('palette-neutral-90'),
+          outlinedColor: getCssVar('palette-neutral-190'),
+          outlinedBorder: getCssVar('palette-neutral-110'),
+          outlinedHoverBorder: getCssVar('palette-neutral-110'),
+          outlinedHoverBg: getCssVar('palette-neutral-20'),
+          outlinedActiveBg: getCssVar('palette-neutral-30'),
         },
         divider: getCssVar('palette-neutral-30'),
       },
@@ -226,23 +237,68 @@ const fluentTheme = extendTheme({
     JoyButton: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
+          borderRadius: '2px',
           ...(ownerState.size === 'md' && {
             minHeight: 'var(--Button-minHeight, 32px)',
             paddingInline: '20px',
+            fontWeight: 600,
             ...theme.typography.bodyText,
+            ...(ownerState.variant === 'plain' &&
+              ownerState.color === 'neutral' &&
+              (ownerState.startDecorator || ownerState.endDecorator) && {
+                paddingInline: '8px',
+              }),
           }),
           ...(ownerState.variant === 'solid' && {
+            // Focus styles of the primary button
             [theme.focus.selector]: {
               outlineColor: '#fff',
               outlineOffset: '-3px',
             },
           }),
-          borderRadius: '2px',
-          fontWeight: 600,
+          ...(ownerState.variant === 'outlined' &&
+            ownerState.color === 'neutral' && {
+              // Focus styles of the secondary button
+              [theme.focus.selector]: {
+                outlineColor: theme.vars.palette.neutral[190],
+                outlineOffset: '-3px',
+              },
+            }),
+          ...(ownerState.variant === 'plain' &&
+            ownerState.color === 'neutral' && {
+              borderRadius: '0px',
+              // Focus styles of the text button
+              [theme.focus.selector]: {
+                outlineColor: theme.vars.palette.neutral[190],
+                outlineOffset: '-1px',
+              },
+            }),
+          ...(ownerState.variant === 'plain' &&
+            ownerState.color === 'neutral' && {
+              fontWeight: 'normal',
+            }),
+          '&:hover': {
+            [`& .${buttonClasses.endDecorator}`]: {
+              color: 'inherit',
+            },
+          },
           [`&.${buttonClasses.disabled}`]: {
             backgroundColor: theme.vars.palette.neutral[20],
             color: theme.vars.palette.neutral[90],
           },
+        }),
+        startDecorator: ({ theme, ownerState }) => ({
+          ...(ownerState.variant === 'plain' &&
+            ownerState.color === 'neutral' &&
+            !ownerState.disabled && {
+              color: theme.vars.palette.primary[500],
+            }),
+        }),
+        endDecorator: ({ theme, ownerState }) => ({
+          ...(ownerState.variant?.match(/^(plain|outlined)$/) &&
+            !ownerState.disabled && {
+              color: theme.vars.palette.neutral[130],
+            }),
         }),
       },
     },
